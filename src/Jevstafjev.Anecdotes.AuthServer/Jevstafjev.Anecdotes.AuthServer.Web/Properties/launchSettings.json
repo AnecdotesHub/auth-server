@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "Kestrel": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:10000;http://localhost:10001",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
