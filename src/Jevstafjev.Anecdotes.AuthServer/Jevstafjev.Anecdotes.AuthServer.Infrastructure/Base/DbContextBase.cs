@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Jevstafjev.Anecdotes.AuthServer.Infrastructure.Base;
 
-public class DbContextBase : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+public abstract class DbContextBase : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
 {
     public DbContextBase(DbContextOptions<ApplicationDbContext> options)
         : base(options) { }
