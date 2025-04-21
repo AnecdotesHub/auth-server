@@ -10,10 +10,10 @@ public class IdentityServerConfiguration
         yield return new Client
         {
             ClientId = "swagger-client-id",
+            ClientSecrets = { new Secret("secret".Sha256()) },
             AllowedGrantTypes = GrantTypes.Code,
-            RequireClientSecret = false,
-            RequireConsent = false,
-            RequirePkce = true,
+            RequireClientSecret = true,
+            RequirePkce = false,
             AllowedScopes =
             {
                 IdentityServerConstants.StandardScopes.OpenId,
@@ -30,7 +30,7 @@ public class IdentityServerConfiguration
         };
         yield return new Client
         {
-            ClientId = "blazor-client",
+            ClientId = "blazor-client-id",
             AllowedGrantTypes = GrantTypes.Code,
             RequireClientSecret = false,
             RequireConsent = false,
@@ -45,7 +45,6 @@ public class IdentityServerConfiguration
             },
             RedirectUris =
             {
-                "https://localhost:10001/swagger/oauth2-redirect.html",
                 "https://localhost:5001/authentication/login-callback"
             },
             PostLogoutRedirectUris = { "https://localhost:5001/authentication/logout-callback" },
