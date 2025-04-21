@@ -9,7 +9,7 @@ public class IdentityServerConfiguration
     {
         yield return new Client
         {
-            ClientId = "swagger-client-id",
+            ClientId = "anecdote-swagger-id",
             ClientSecrets = { new Secret("secret".Sha256()) },
             AllowedGrantTypes = GrantTypes.Code,
             RequireClientSecret = true,
@@ -27,6 +27,27 @@ public class IdentityServerConfiguration
                 "https://localhost:7001/swagger/oauth2-redirect.html",
             },
             AllowedCorsOrigins = { "https://localhost:7001" }
+        };
+        yield return new Client
+        {
+            ClientId = "subscriber-swagger-id",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+            AllowedGrantTypes = GrantTypes.Code,
+            RequireClientSecret = true,
+            RequirePkce = false,
+            AllowedScopes =
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Address,
+                IdentityServerConstants.StandardScopes.Profile,
+                IdentityServerConstants.StandardScopes.Email,
+                "SubscriberApi"
+            },
+            RedirectUris =
+            {
+                "https://localhost:8001/swagger/oauth2-redirect.html",
+            },
+            AllowedCorsOrigins = { "https://localhost:8001" }
         };
         yield return new Client
         {
@@ -58,6 +79,10 @@ public class IdentityServerConfiguration
         {
             Scopes = { "AnecdoteApi" }
         };
+        yield return new ApiResource("SubscriberApi")
+        {
+            Scopes = { "SubscriberApi" }
+        };
     }
 
     public static IEnumerable<IdentityResource> GetIdentityResources()
@@ -71,5 +96,6 @@ public class IdentityServerConfiguration
     public static IEnumerable<ApiScope> GetScopes()
     {
         yield return new ApiScope("AnecdoteApi");
+        yield return new ApiScope("SubscriberApi");
     }
 }
