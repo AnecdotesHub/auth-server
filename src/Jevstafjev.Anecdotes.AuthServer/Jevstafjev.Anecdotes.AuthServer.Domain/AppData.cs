@@ -2,4 +2,5 @@
 
 public class AppData
 {
+    public const string PolicyCorsName = "CorsPolicy";
 }
