@@ -9,6 +9,27 @@ public class IdentityServerConfiguration
     {
         yield return new Client
         {
+            ClientId = "swagger-client-id",
+            AllowedGrantTypes = GrantTypes.Code,
+            RequireClientSecret = false,
+            RequireConsent = false,
+            RequirePkce = true,
+            AllowedScopes =
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Address,
+                IdentityServerConstants.StandardScopes.Profile,
+                IdentityServerConstants.StandardScopes.Email,
+                "AnecdoteApi"
+            },
+            RedirectUris =
+            {
+                "https://localhost:7000/swagger/oauth2-redirect.html",
+            },
+            AllowedCorsOrigins = { "https://localhost:7000" }
+        };
+        yield return new Client
+        {
             ClientId = "blazor-client",
             AllowedGrantTypes = GrantTypes.Code,
             RequireClientSecret = false,
@@ -34,7 +55,10 @@ public class IdentityServerConfiguration
 
     public static IEnumerable<ApiResource> GetApiResources()
     {
-        yield return new ApiResource("AnecdoteApi");
+        yield return new ApiResource("AnecdoteApi")
+        {
+            Scopes = { "AnecdoteApi" }
+        };
     }
 
     public static IEnumerable<IdentityResource> GetIdentityResources()
