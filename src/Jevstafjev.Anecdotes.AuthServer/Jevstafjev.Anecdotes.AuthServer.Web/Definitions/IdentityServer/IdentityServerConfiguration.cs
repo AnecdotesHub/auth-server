@@ -24,9 +24,9 @@ public class IdentityServerConfiguration
             },
             RedirectUris =
             {
-                "https://localhost:7000/swagger/oauth2-redirect.html",
+                "https://localhost:7001/swagger/oauth2-redirect.html",
             },
-            AllowedCorsOrigins = { "https://localhost:7000" }
+            AllowedCorsOrigins = { "https://localhost:7001" }
         };
         yield return new Client
         {
