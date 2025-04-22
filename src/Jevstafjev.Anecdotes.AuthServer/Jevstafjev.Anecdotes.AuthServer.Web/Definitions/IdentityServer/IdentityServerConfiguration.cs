@@ -72,6 +72,27 @@ public class IdentityServerConfiguration
         };
         yield return new Client
         {
+            ClientId = "generator-swagger-id",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+            AllowedGrantTypes = GrantTypes.Code,
+            RequireClientSecret = true,
+            RequirePkce = false,
+            AllowedScopes =
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Address,
+                IdentityServerConstants.StandardScopes.Profile,
+                IdentityServerConstants.StandardScopes.Email,
+                "AnecdoteGenerator"
+            },
+            RedirectUris =
+            {
+                "https://localhost:4001/swagger/oauth2-redirect.html",
+            },
+            AllowedCorsOrigins = { "https://localhost:4001" }
+        };
+        yield return new Client
+        {
             ClientId = "blazor-client-id",
             AllowedGrantTypes = GrantTypes.Code,
             RequireClientSecret = false,
@@ -83,7 +104,8 @@ public class IdentityServerConfiguration
                 IdentityServerConstants.StandardScopes.Address,
                 IdentityServerConstants.StandardScopes.Profile,
                 IdentityServerConstants.StandardScopes.Email,
-                "AnecdoteApi"
+                "AnecdoteApi",
+                "AnecdoteGenerator"
             },
             RedirectUris =
             {
@@ -122,6 +144,10 @@ public class IdentityServerConfiguration
         {
             Scopes = { "Notification" }
         };
+        yield return new ApiResource("AnecdoteGenerator")
+        {
+            Scopes = { "AnecdoteGenerator" }
+        };
     }
 
     public static IEnumerable<IdentityResource> GetIdentityResources()
@@ -137,5 +163,6 @@ public class IdentityServerConfiguration
         yield return new ApiScope("AnecdoteApi");
         yield return new ApiScope("SubscriberApi");
         yield return new ApiScope("Notification");
+        yield return new ApiScope("AnecdoteGenerator");
     }
 }
