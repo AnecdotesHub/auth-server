@@ -51,6 +51,27 @@ public class IdentityServerConfiguration
         };
         yield return new Client
         {
+            ClientId = "notification-swagger-id",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+            AllowedGrantTypes = GrantTypes.Code,
+            RequireClientSecret = true,
+            RequirePkce = false,
+            AllowedScopes =
+            {
+                IdentityServerConstants.StandardScopes.OpenId,
+                IdentityServerConstants.StandardScopes.Address,
+                IdentityServerConstants.StandardScopes.Profile,
+                IdentityServerConstants.StandardScopes.Email,
+                "Notification"
+            },
+            RedirectUris =
+            {
+                "https://localhost:9001/swagger/oauth2-redirect.html",
+            },
+            AllowedCorsOrigins = { "https://localhost:9001" }
+        };
+        yield return new Client
+        {
             ClientId = "blazor-client-id",
             AllowedGrantTypes = GrantTypes.Code,
             RequireClientSecret = false,
@@ -71,6 +92,20 @@ public class IdentityServerConfiguration
             PostLogoutRedirectUris = { "https://localhost:5001/authentication/logout-callback" },
             AllowedCorsOrigins = { "https://localhost:5001" }
         };
+        yield return new Client
+        {
+            ClientId = "notification-service-client",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+            AllowedGrantTypes = GrantTypes.ClientCredentials,
+            AllowedScopes = { "SubscriberApi" }
+        };
+        yield return new Client
+        {
+            ClientId = "anecdote-service-client",
+            ClientSecrets = { new Secret("secret".Sha256()) },
+            AllowedGrantTypes = GrantTypes.ClientCredentials,
+            AllowedScopes = { "Notification" }
+        };
     }
 
     public static IEnumerable<ApiResource> GetApiResources()
@@ -82,6 +117,10 @@ public class IdentityServerConfiguration
         yield return new ApiResource("SubscriberApi")
         {
             Scopes = { "SubscriberApi" }
+        };
+        yield return new ApiResource("Notification")
+        {
+            Scopes = { "Notification" }
         };
     }
 
@@ -97,5 +136,6 @@ public class IdentityServerConfiguration
     {
         yield return new ApiScope("AnecdoteApi");
         yield return new ApiScope("SubscriberApi");
+        yield return new ApiScope("Notification");
     }
 }
